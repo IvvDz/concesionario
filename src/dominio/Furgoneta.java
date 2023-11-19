@@ -1,13 +1,27 @@
-public class Furgoneta extends Vehiculo {
-    private double capacidadM3;
+package dominio;
 
-    public Furgoneta(String marca, String modelo, double precioBase, double capacidadM3) {
-        super(marca, modelo, precioBase);
-        this.capacidadM3 = capacidadM3;
+public class Furgoneta extends Vehiculo {
+
+    private int capacidad;
+    private double precioFinal;
+
+    public Furgoneta(String marca, String modelo, int precioBase, int capacidad, int asientos) {
+        super(marca, modelo, precioBase, asientos);
+        this.capacidad = capacidad;
+        this.precioFinal = calcularPrecioFinal();
     }
 
-    @Override
-    public double calcularPrecioFinal() {
-        return precioBase * Math.pow(capacidadM3, 1.0 / 3) / 2;
+    private double calcularPrecioFinal() {
+        double raizCubica = Math.cbrt(this.capacidad);
+        double precioBase = this.getPrecioBase();
+        this.precioFinal = precioBase * (raizCubica / 2);
+        return this.precioFinal;
+    }
+
+    public String toString() {
+        String s = "Marca: " + this.getMarca() + ". Modelo: " + this.getModelo() + ". Precio base: " +
+                this.getPrecioBase() + ". Precio final: " + this.getPrecio() + ". Capacidad: " +
+                this.capacidad + ". Asientos: " + this.getAsientos();
+        return s;
     }
 }
